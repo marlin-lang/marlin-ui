@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SourceLineItem">
+            <connections>
+                <outlet property="source" destination="lEg-IZ-gHu" id="7KS-uo-c6e"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="805" height="37"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lEg-IZ-gHu">
+                    <rect key="frame" x="-2" y="0.0" width="809" height="37"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" id="f7u-qE-Ml9">
+                        <font key="font" size="30" name="Courier"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="lEg-IZ-gHu" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="1jY-9o-b8e"/>
+                <constraint firstAttribute="bottom" secondItem="lEg-IZ-gHu" secondAttribute="bottom" id="Ws7-wf-U3O"/>
+                <constraint firstAttribute="trailing" secondItem="lEg-IZ-gHu" secondAttribute="trailing" id="krb-K2-cqe"/>
+                <constraint firstItem="lEg-IZ-gHu" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="ytn-UA-luk"/>
+            </constraints>
+            <point key="canvasLocation" x="60.5" y="96.5"/>
+        </customView>
+    </objects>
+</document>

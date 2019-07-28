@@ -1,7 +1,9 @@
 #import <Cocoa/Cocoa.h>
 
+#import <document.hpp>
+
 @interface Document : NSDocument
 
-@property(nonatomic, retain) NSMutableArray* lines;
+- (marlin::document*)document;
 
 @end

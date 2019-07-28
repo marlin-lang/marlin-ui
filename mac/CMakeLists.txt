@@ -1,4 +1,8 @@
-set(HEADERS AppDelegate.h Document.h SourceLineItem.h SourceViewController.h)
+set(HEADERS
+    AppDelegate.h
+    Document.h
+    SourceLineItem.h
+    SourceViewController.h)
 
 set(SOURCES
     AppDelegate.mm
@@ -14,12 +18,12 @@ set(RESOURCES
     Base.lproj/Main.storyboard
     SourceLineItem.xib)
 
-add_executable(${APP_NAME} MACOSX_BUNDLE ${HEADERS} ${SOURCES} ${RESOURCES})
+add_executable(${PROJECT_NAME}.mac MACOSX_BUNDLE ${HEADERS} ${SOURCES} ${RESOURCES})
 
-set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${RESOURCES}")
+set_target_properties(${PROJECT_NAME}.mac
+                      PROPERTIES OUTPUT_NAME marlin MACOSX_BUNDLE_INFO_PLIST
+                                 "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
+                                 RESOURCE
+                                 "${RESOURCES}")
 
-set_target_properties(${APP_NAME}
-                      PROPERTIES MACOSX_BUNDLE_INFO_PLIST
-                                 "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
-
-target_link_libraries(${APP_NAME} "-framework AppKit")
+target_link_libraries(${PROJECT_NAME}.mac "-framework AppKit" ${PROJECT_NAME}.core)

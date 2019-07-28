@@ -1,12 +1,12 @@
 #import "Document.h"
 
-@interface Document ()
+@interface Document () {
+    marlin::document _document;
+}
 
 @end
 
 @implementation Document
-
-@synthesize lines;
 
 - (instancetype)init {
   self = [super init];
@@ -20,11 +20,15 @@
   return YES;
 }
 
+- (marlin::document *)document {
+    return &_document;
+}
+
 - (void)makeWindowControllers {
   // Override to return the Storyboard file name of the document.
   NSWindowController *controller = [[NSStoryboard storyboardWithName:@"Main" bundle:nil]
       instantiateControllerWithIdentifier:@"Document Window Controller"];
-  controller.contentViewController.representedObject = lines;
+  controller.contentViewController.representedObject = self;
   [self addWindowController:controller];
 }
 
@@ -40,7 +44,7 @@
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError {
   NSString *source = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-  lines = [[source componentsSeparatedByString:@"\n"] mutableCopy];
+  _document.set_source(source.UTF8String);
   return YES;
 }
 

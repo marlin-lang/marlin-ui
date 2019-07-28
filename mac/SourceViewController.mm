@@ -1,10 +1,12 @@
 #import "SourceViewController.h"
 
+#import "Document.h"
 #import "SourceLineItem.h"
 
 @interface SourceViewController ()
 
 @property(nonatomic, assign) IBOutlet NSCollectionView *collectionView;
+@property(nonatomic, assign) IBOutlet NSTextField *outputTextField;
 
 @end
 
@@ -21,22 +23,33 @@
   [collectionView reloadData];
 }
 
+- (IBAction)execute:(id)sender {
+  Document *doc = self.representedObject;
+  auto document = [doc document];
+  document->execute();
+  self.outputTextField.stringValue = [NSString stringWithCString:document->output().c_str()
+                                                        encoding:NSUTF8StringEncoding];
+}
+
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView {
   return 1;
 }
 
 - (NSInteger)collectionView:(NSCollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  NSMutableArray *lines = self.representedObject;
-  return lines.count;
+  Document *doc = self.representedObject;
+  auto document = [doc document];
+  return document->line_count();
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView
      itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
   SourceLineItem *item = [collectionView makeItemWithIdentifier:@"SourceLineItem"
                                                    forIndexPath:indexPath];
-  NSMutableArray *lines = self.representedObject;
-  item.source.stringValue = [lines objectAtIndex:indexPath.item];
+  Document *doc = self.representedObject;
+  auto document = [doc document];
+  item.source.stringValue = [NSString stringWithCString:document->line_at(indexPath.item).c_str()
+                                               encoding:NSUTF8StringEncoding];
   return item;
 }
 

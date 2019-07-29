@@ -1,5 +1,6 @@
 #import "Document.h"
 
+#import "NSObject+Casting.h"
 #import "SourceViewController.h"
 
 @interface Document () {
@@ -31,17 +32,19 @@
   NSWindowController *controller = [[NSStoryboard storyboardWithName:@"Main" bundle:nil]
       instantiateControllerWithIdentifier:@"Document Window Controller"];
   [self addWindowController:controller];
-  SourceViewController *vc = (SourceViewController *)controller.contentViewController;
-  vc.document = self;
-  if (_availability) {
-    [vc setNeedsUpdate];
+  if (auto *vc = [SourceViewController cast:controller.contentViewController]) {
+    vc.document = self;
+    if (_availability) {
+      [vc setNeedsUpdate];
+    }
   }
 }
 
 - (void)update {
   for (NSWindowController *controller in self.windowControllers) {
-    SourceViewController *vc = (SourceViewController *)controller.contentViewController;
-    [vc setNeedsUpdate];
+    if (auto *vc = [SourceViewController cast:controller.contentViewController]) {
+      [vc setNeedsUpdate];
+    }
   }
 }
 

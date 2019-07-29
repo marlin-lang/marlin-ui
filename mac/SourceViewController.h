@@ -4,7 +4,7 @@
 
 @interface SourceViewController : NSViewController
 
-@property (nonatomic, assign) Document* document;
+@property(nonatomic, weak) Document* document;
 
 - (void)setNeedsUpdate;
 

@@ -709,32 +709,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aif-c4-Vl1">
+                            <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" scrollerKnobStyle="light" translatesAutoresizingMaskIntoConstraints="NO" id="iAL-nh-whg">
                                 <rect key="frame" x="20" y="50" width="984" height="698"/>
-                                <clipView key="contentView" id="DJt-V2-a4j">
-                                    <rect key="frame" x="1" y="1" width="982" height="696"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Wr3-zu-x9s">
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="698"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <collectionView id="1ud-rT-LKC">
-                                            <rect key="frame" x="0.0" y="0.0" width="982" height="696"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="2Nv-AP-uhF">
-                                                <size key="itemSize" width="700" height="30"/>
-                                            </collectionViewFlowLayout>
-                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <connections>
-                                                <outlet property="dataSource" destination="5gI-5U-AMq" id="RHB-ZB-038"/>
-                                                <outlet property="delegate" destination="5gI-5U-AMq" id="WK7-ZU-klz"/>
-                                            </connections>
-                                        </collectionView>
+                                        <textView editable="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" allowsUndo="YES" usesRuler="YES" textCompletion="NO" id="ZTq-1x-bO0">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="698"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="minSize" width="984" height="698"/>
+                                            <size key="maxSize" width="984" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7qZ-Eu-VQH">
-                                    <rect key="frame" x="-100" y="-100" width="233" height="15"/>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="LdF-Xh-0GU">
+                                    <rect key="frame" x="-100" y="-100" width="240" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="mAw-ak-87Q">
-                                    <rect key="frame" x="967" y="1" width="16" height="582"/>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Mne-rt-Wtk">
+                                    <rect key="frame" x="968" y="0.0" width="16" height="698"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -758,20 +755,20 @@
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="aif-c4-Vl1" secondAttribute="trailing" constant="20" symbolic="YES" id="BIx-B3-htg"/>
                             <constraint firstItem="ePr-vE-9fc" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="20" symbolic="YES" id="BmA-m2-eaK"/>
-                            <constraint firstItem="aif-c4-Vl1" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="20" symbolic="YES" id="GY1-jZ-Abg"/>
+                            <constraint firstItem="S9y-gU-dge" firstAttribute="top" secondItem="iAL-nh-whg" secondAttribute="bottom" constant="8" symbolic="YES" id="J0o-Rl-eeK"/>
                             <constraint firstAttribute="trailing" secondItem="S9y-gU-dge" secondAttribute="trailing" constant="20" symbolic="YES" id="NXy-5O-gTT"/>
+                            <constraint firstItem="iAL-nh-whg" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" constant="20" symbolic="YES" id="NaE-UH-32b"/>
                             <constraint firstAttribute="bottom" secondItem="S9y-gU-dge" secondAttribute="bottom" constant="20" symbolic="YES" id="UFI-FT-Kxh"/>
                             <constraint firstItem="S9y-gU-dge" firstAttribute="centerY" secondItem="ePr-vE-9fc" secondAttribute="centerY" id="Yp0-AG-tAr"/>
-                            <constraint firstItem="S9y-gU-dge" firstAttribute="top" secondItem="aif-c4-Vl1" secondAttribute="bottom" constant="8" symbolic="YES" id="hvn-88-Pof"/>
+                            <constraint firstAttribute="trailing" secondItem="iAL-nh-whg" secondAttribute="trailing" constant="20" symbolic="YES" id="hxu-dV-Fhw"/>
                             <constraint firstItem="S9y-gU-dge" firstAttribute="leading" secondItem="ePr-vE-9fc" secondAttribute="trailing" constant="8" symbolic="YES" id="jXR-2r-1H9"/>
-                            <constraint firstItem="aif-c4-Vl1" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" constant="20" symbolic="YES" id="zrL-Dn-It2"/>
+                            <constraint firstItem="iAL-nh-whg" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="20" symbolic="YES" id="us5-Fo-Nld"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="1ud-rT-LKC" id="xMy-Y2-jES"/>
                         <outlet property="outputTextField" destination="S9y-gU-dge" id="ylm-x8-nyG"/>
+                        <outlet property="sourceTextView" destination="ZTq-1x-bO0" id="rmG-Kk-MfX"/>
                     </connections>
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

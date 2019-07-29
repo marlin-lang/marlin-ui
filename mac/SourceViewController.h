@@ -1,7 +1,11 @@
 #import <Cocoa/Cocoa.h>
 
-@interface SourceViewController
-    : NSViewController<NSCollectionViewDataSource, NSCollectionViewDelegate,
-                       NSCollectionViewDelegateFlowLayout>
+#import "Document.h"
+
+@interface SourceViewController : NSViewController
+
+@property (nonatomic, assign) Document* document;
+
+- (void)setNeedsUpdate;
 
 @end

@@ -1,7 +1,10 @@
 #import "Document.h"
 
+#import "SourceViewController.h"
+
 @interface Document () {
-    marlin::document _document;
+  marlin::document _content;
+  bool _availability;
 }
 
 @end
@@ -11,7 +14,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    // Add your subclass-specific initialization here.
+    _availability = false;
   }
   return self;
 }
@@ -20,16 +23,26 @@
   return YES;
 }
 
-- (marlin::document *)document {
-    return &_document;
+- (marlin::document &)content {
+  return _content;
 }
 
 - (void)makeWindowControllers {
-  // Override to return the Storyboard file name of the document.
   NSWindowController *controller = [[NSStoryboard storyboardWithName:@"Main" bundle:nil]
       instantiateControllerWithIdentifier:@"Document Window Controller"];
-  controller.contentViewController.representedObject = self;
   [self addWindowController:controller];
+  SourceViewController *vc = (SourceViewController *)controller.contentViewController;
+  vc.document = self;
+  if (_availability) {
+    [vc setNeedsUpdate];
+  }
+}
+
+- (void)update {
+  for (NSWindowController *controller in self.windowControllers) {
+    SourceViewController *vc = (SourceViewController *)controller.contentViewController;
+    [vc setNeedsUpdate];
+  }
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
@@ -44,7 +57,9 @@
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError {
   NSString *source = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-  _document.set_source(source.UTF8String);
+  _content.set_source(source.UTF8String);
+  _availability = true;
+  [self update];
   return YES;
 }
 

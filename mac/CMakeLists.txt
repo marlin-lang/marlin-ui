@@ -1,22 +1,19 @@
 set(HEADERS
     AppDelegate.h
     Document.h
-    SourceLineItem.h
     SourceViewController.h)
 
 set(SOURCES
     AppDelegate.mm
     Document.mm
     main.mm
-    SourceLineItem.mm
     SourceViewController.mm)
 
 set(RESOURCES
     Info.plist
     marlin.entitlements
     Assets.xcassets
-    Base.lproj/Main.storyboard
-    SourceLineItem.xib)
+    Base.lproj/Main.storyboard)
 
 add_executable(${PROJECT_NAME}.mac MACOSX_BUNDLE ${HEADERS} ${SOURCES} ${RESOURCES})
 

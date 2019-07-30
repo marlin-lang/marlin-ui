@@ -22,8 +22,15 @@
 
 - (void)update {
   auto &doc = self.document.content;
-  self.sourceTextView.string = [NSString stringWithCString:doc.source().c_str()
+  auto &source = doc.source();
+  self.sourceTextView.string = [NSString stringWithCString:source.c_str()
                                                   encoding:NSUTF8StringEncoding];
+  auto *font = [NSFont fontWithName:@"Courier" size:25];
+  auto *attrs = @{NSFontAttributeName : font};
+  [self.sourceTextView.textStorage setAttributes:attrs range:NSMakeRange(0, doc.source().size())];
+  auto *highlight_attrs = @{@"Highlight" : @1, NSFontAttributeName : font};
+  auto loc = source.find("print");
+  [self.sourceTextView.textStorage setAttributes:highlight_attrs range:NSMakeRange(loc, 5)];
 }
 
 - (IBAction)execute:(id)sender {

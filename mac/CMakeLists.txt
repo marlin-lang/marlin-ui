@@ -1,11 +1,17 @@
-set(HEADERS AppDelegate.h Document.h SourceViewController.h NSObject+Casting.h)
+set(HEADERS
+    AppDelegate.h
+    Document.h
+    NSObject+Casting.h
+    SourceTextView.h
+    SourceViewController.h)
 
 set(SOURCES
     AppDelegate.mm
     Document.mm
     main.mm
-    SourceViewController.mm
-    NSObject+Casting.mm)
+    NSObject+Casting.mm
+    SourceTextView.mm
+    SourceViewController.mm)
 
 set(RESOURCES
     Info.plist
@@ -13,11 +19,8 @@ set(RESOURCES
     Assets.xcassets
     Base.lproj/Main.storyboard)
 
-add_executable(${PROJECT_NAME}.mac
-               MACOSX_BUNDLE
-               ${HEADERS}
-               ${SOURCES}
-               ${RESOURCES})
+add_executable(${PROJECT_NAME}.mac MACOSX_BUNDLE ${HEADERS} ${SOURCES}
+                                                 ${RESOURCES})
 
 set_target_properties(${PROJECT_NAME}.mac
                       PROPERTIES OUTPUT_NAME

@@ -1,6 +1,7 @@
 #import "SourceViewController.h"
 
 #import "Document.h"
+#import "SourceTheme.h"
 
 @interface SourceViewController ()
 
@@ -25,12 +26,35 @@
   auto &source = doc.source();
   self.sourceTextView.string = [NSString stringWithCString:source.c_str()
                                                   encoding:NSUTF8StringEncoding];
-  auto *font = [NSFont fontWithName:@"Courier" size:25];
-  auto *attrs = @{NSFontAttributeName : font};
-  [self.sourceTextView.textStorage setAttributes:attrs range:NSMakeRange(0, doc.source().size())];
-  auto *highlight_attrs = @{@"Highlight" : @1, NSFontAttributeName : font};
+  auto *theme = [SourceTheme new];
+  [self.sourceTextView.textStorage setAttributes:theme.allAttrs
+                                           range:NSMakeRange(0, source.size())];
+
+  doc.for_each_highlight([self, theme](marlin::format::highlight::token_type type, int start,
+                                       int len) {
+    switch (type) {
+      case marlin::format::highlight::token_type::op:
+        [self.sourceTextView.textStorage setAttributes:theme.opAttrs range:NSMakeRange(start, len)];
+        break;
+      case marlin::format::highlight::token_type::boolean:
+        [self.sourceTextView.textStorage setAttributes:theme.booleanAttrs
+                                                 range:NSMakeRange(start, len)];
+        break;
+      case marlin::format::highlight::token_type::number:
+        [self.sourceTextView.textStorage setAttributes:theme.numberAttrs
+                                                 range:NSMakeRange(start, len)];
+        break;
+      case marlin::format::highlight::token_type::string:
+        [self.sourceTextView.textStorage setAttributes:theme.stringAttrs
+                                                 range:NSMakeRange(start, len)];
+        break;
+      default:
+        break;
+    }
+  });
+
   auto loc = source.find("print");
-  [self.sourceTextView.textStorage setAttributes:highlight_attrs range:NSMakeRange(loc, 5)];
+  [self.sourceTextView.textStorage setAttributes:theme.focusAttrs range:NSMakeRange(loc, 5)];
 }
 
 - (IBAction)execute:(id)sender {

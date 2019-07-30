@@ -13,8 +13,7 @@
 @implementation Document
 
 - (instancetype)init {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     _availability = false;
   }
   return self;

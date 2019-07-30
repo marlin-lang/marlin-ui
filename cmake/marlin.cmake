@@ -2,7 +2,7 @@ include(FetchContent)
 
 FetchContent_Declare(marlin
                      GIT_REPOSITORY https://github.com/marlin-lang/marlin.git
-                     GIT_TAG 22de5454a4fed0422913f983768b48bbd00564be)
+                     GIT_TAG 3e4af4d7914c65dab160c86db0f8403201b7f258)
 
 FetchContent_GetProperties(marlin)
 if(NOT marlin_POPULATED)

@@ -13,7 +13,7 @@
       enumerateAttributesInRange:(NSRange){0, self.string.length}
                          options:NSAttributedStringEnumerationReverse
                       usingBlock:^(NSDictionary* attributes, NSRange range, BOOL* stop) {
-                        if ([attributes objectForKey:@"Highlight"] != nil) {
+                        if ([attributes objectForKey:@"Focus"] != nil) {
                           NSDictionary* tagAttributes =
                               [self.attributedString attributesAtIndex:range.location
                                                         effectiveRange:nil];

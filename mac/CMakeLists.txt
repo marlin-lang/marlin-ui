@@ -3,6 +3,7 @@ set(HEADERS
     Document.h
     NSObject+Casting.h
     SourceTextView.h
+    SourceTheme.h
     SourceViewController.h)
 
 set(SOURCES
@@ -11,6 +12,7 @@ set(SOURCES
     main.mm
     NSObject+Casting.mm
     SourceTextView.mm
+    SourceTheme.mm
     SourceViewController.mm)
 
 set(RESOURCES

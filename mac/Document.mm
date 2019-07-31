@@ -4,8 +4,7 @@
 #import "SourceViewController.h"
 
 @interface Document () {
-  marlin::document _content;
-  bool _availability;
+  std::optional<marlin::document> _content;
 }
 
 @end
@@ -14,7 +13,6 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    _availability = false;
   }
   return self;
 }
@@ -23,7 +21,7 @@
   return YES;
 }
 
-- (marlin::document &)content {
+- (std::optional<marlin::document> &)content {
   return _content;
 }
 
@@ -33,7 +31,7 @@
   [self addWindowController:controller];
   if (auto *vc = [SourceViewController cast:controller.contentViewController]) {
     vc.document = self;
-    if (_availability) {
+    if (_content) {
       [vc setNeedsUpdate];
     }
   }
@@ -59,8 +57,7 @@
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError {
   NSString *source = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-  _content.set_source(source.UTF8String);
-  _availability = true;
+  _content.emplace(source.UTF8String);
   [self update];
   return YES;
 }

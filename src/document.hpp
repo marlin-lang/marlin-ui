@@ -11,15 +11,13 @@
 #include <marlin/lint.hpp>
 #include <marlin/parse.hpp>
 
+#include "source.hpp"
+
 namespace marlin {
 
 struct document {
-  document() noexcept { set_source(""); }
-
-  void set_source(std::string source) noexcept {
-    _source = std::move(source);
-    update_lines_start();
-    auto [code, errors] = marlin::parse::process(_source);
+  document(std::string str) noexcept : _source{std::move(str)} {
+    auto [code, errors] = marlin::parse::process(_source.str());
     _code = std::move(code);
     _parse_errors = std::move(errors);
 
@@ -30,39 +28,29 @@ struct document {
     _highlights = hl.generate();
   }
 
-  const auto& source() const noexcept { return _source; }
+  const auto& source_str() const noexcept { return _source.str(); }
 
   const auto& output() const noexcept { return _output; }
 
   template <typename Block>
   void for_each_highlight(Block&& block) {
     for (auto token : _highlights) {
-      assert(token.range.begin.line <= _lines_start.size());
-      assert(token.range.end.line <= _lines_start.size());
-      auto begin = _lines_start[token.range.begin.line - 1] +
-                   token.range.begin.column - 1;
-      auto end =
-          _lines_start[token.range.end.line - 1] + token.range.end.column - 1;
-      auto len = end - begin;
+      auto begin = _source.index_of_loc(token.range.begin);
+      auto len = _source.index_of_loc(token.range.end) - begin;
       block(token.type, begin, len);
     }
   }
 
-  auto selection_from_index(std::size_t index) {
-    auto begin = _source.rfind(' ', index);
-    if (begin == std::string::npos) {
-      begin = 0;
-    } else {
-      ++begin;
+  std::pair<size_t, size_t> code_range_contains_index(size_t index) {
+    auto loc = _source.loc_of_index(index);
+    if (_code->source_code_range().contains(loc)) {
+      auto& sub_code = _code.locate(loc);
+      auto code_range = sub_code->source_code_range();
+      auto begin = _source.index_of_loc(code_range.begin);
+      auto end = _source.index_of_loc(code_range.end);
+      return {begin, end - begin};
     }
-    auto end = _source.find(' ', index);
-    if (end == std::string::npos) {
-      end = _source.size();
-    }
-    if (end < begin) {
-      end = begin + 1;
-    }
-    return std::pair{begin, end - begin};
+    return std::pair{0, 0};
   }
 
   void execute() {
@@ -74,21 +62,10 @@ struct document {
   }
 
  private:
-  void update_lines_start() {
-    std::istringstream iss{_source};
-    std::string line;
-    auto index = 0;
-    while (std::getline(iss, line)) {
-      _lines_start.push_back(index);
-      index += line.size() + 1;
-    }
-  }
-
-  std::string _source;
+  source _source;
   marlin::code _code;
   std::vector<marlin::parse::error> _parse_errors;
   std::vector<marlin::format::highlight::token> _highlights;
-  std::vector<int> _lines_start;
 
   std::string _output;
 };

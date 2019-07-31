@@ -24,15 +24,15 @@
 
 - (void)update {
   auto &doc = self.document.content;
-  auto &source = doc.source();
-  self.sourceTextView.string = [NSString stringWithCString:source.c_str()
+  auto &source_str = doc->source_str();
+  self.sourceTextView.string = [NSString stringWithCString:source_str.c_str()
                                                   encoding:NSUTF8StringEncoding];
   auto *theme = [SourceTheme new];
   [self.sourceTextView.textStorage setAttributes:theme.allAttrs
-                                           range:NSMakeRange(0, source.size())];
+                                           range:NSMakeRange(0, source_str.size())];
 
-  doc.for_each_highlight([self, theme](marlin::format::highlight::token_type type, int start,
-                                       int len) {
+  doc->for_each_highlight([self, theme](marlin::format::highlight::token_type type, int start,
+                                        int len) {
     switch (type) {
       case marlin::format::highlight::token_type::op:
         [self.sourceTextView.textStorage setAttributes:theme.opAttrs range:NSMakeRange(start, len)];
@@ -57,19 +57,19 @@
 
 - (IBAction)execute:(id)sender {
   auto &doc = self.document.content;
-  doc.execute();
-  self.outputTextField.stringValue = [NSString stringWithCString:doc.output().c_str()
+  doc->execute();
+  self.outputTextField.stringValue = [NSString stringWithCString:doc->output().c_str()
                                                         encoding:NSUTF8StringEncoding];
 }
 
 - (void)textView:(SourceTextView *)textView clickAtIndex:(NSUInteger)index {
   auto &doc = self.document.content;
-  auto [begin, len]{doc.selection_from_index(index)};
+  auto [begin, len]{doc->code_range_contains_index(index)};
   auto *theme = [SourceTheme new];
   [self.sourceTextView.textStorage removeAttribute:theme.NSSelectionAttributeName
-                                             range:NSMakeRange(0, doc.source().size())];
+                                             range:NSMakeRange(0, doc->source_str().size())];
   [self.sourceTextView.textStorage addAttribute:theme.NSSelectionAttributeName
-                                          value:YES
+                                          value:@YES
                                           range:NSMakeRange(begin, len)];
 }
 

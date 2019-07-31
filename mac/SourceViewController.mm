@@ -5,7 +5,7 @@
 
 @interface SourceViewController ()
 
-@property(nonatomic, weak) IBOutlet NSTextView *sourceTextView;
+@property(nonatomic, weak) IBOutlet SourceTextView *sourceTextView;
 @property(nonatomic, weak) IBOutlet NSTextField *outputTextField;
 
 @end
@@ -14,6 +14,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.sourceTextView.sourceDelegate = self;
 }
 
 - (void)setNeedsUpdate {
@@ -52,9 +53,6 @@
         break;
     }
   });
-
-  auto loc = source.find("print");
-  [self.sourceTextView.textStorage setAttributes:theme.focusAttrs range:NSMakeRange(loc, 5)];
 }
 
 - (IBAction)execute:(id)sender {
@@ -62,6 +60,17 @@
   doc.execute();
   self.outputTextField.stringValue = [NSString stringWithCString:doc.output().c_str()
                                                         encoding:NSUTF8StringEncoding];
+}
+
+- (void)textView:(SourceTextView *)textView clickAtIndex:(NSUInteger)index {
+  auto &doc = self.document.content;
+  auto [begin, len]{doc.selection_from_index(index)};
+  auto *theme = [SourceTheme new];
+  [self.sourceTextView.textStorage removeAttribute:theme.NSSelectionAttributeName
+                                             range:NSMakeRange(0, doc.source().size())];
+  [self.sourceTextView.textStorage addAttribute:theme.NSSelectionAttributeName
+                                          value:YES
+                                          range:NSMakeRange(begin, len)];
 }
 
 @end

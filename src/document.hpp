@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <marlin/exec.hpp>
@@ -45,6 +46,23 @@ struct document {
       auto len = end - begin;
       block(token.type, begin, len);
     }
+  }
+
+  auto selection_from_index(std::size_t index) {
+    auto begin = _source.rfind(' ', index);
+    if (begin == std::string::npos) {
+      begin = 0;
+    } else {
+      ++begin;
+    }
+    auto end = _source.find(' ', index);
+    if (end == std::string::npos) {
+      end = _source.size();
+    }
+    if (end < begin) {
+      end = begin + 1;
+    }
+    return std::pair{begin, end - begin};
   }
 
   void execute() {

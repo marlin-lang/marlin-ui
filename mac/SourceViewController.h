@@ -1,8 +1,9 @@
 #import <Cocoa/Cocoa.h>
 
 #import "Document.h"
+#import "SourceTextView.h"
 
-@interface SourceViewController : NSViewController
+@interface SourceViewController : NSViewController <SourceTextViewDelegate>
 
 @property(nonatomic, weak) Document* document;
 

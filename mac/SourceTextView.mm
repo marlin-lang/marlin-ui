@@ -1,19 +1,35 @@
 #import "SourceTextView.h"
 
+#import "SourceTheme.h"
+
 @interface SourceTextView ()
 
 @end
 
 @implementation SourceTextView
 
+- (void)mouseDown:(NSEvent*)theEvent {
+  [super mouseDown:theEvent];
+
+  auto eventLocation = [theEvent locationInWindow];
+  auto loc = [self convertPoint:eventLocation fromView:nil];
+  auto index = [self characterIndexForInsertionAtPoint:loc];
+  [self.sourceDelegate textView:self clickAtIndex:index];
+}
+
+- (void)mouseMoved:(NSEvent*)event {
+  [[NSCursor arrowCursor] set];
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
   [super drawRect:dirtyRect];
 
+  auto* theme = [SourceTheme new];
   [self.attributedString
       enumerateAttributesInRange:(NSRange){0, self.string.length}
                          options:NSAttributedStringEnumerationReverse
                       usingBlock:^(NSDictionary* attributes, NSRange range, BOOL* stop) {
-                        if ([attributes objectForKey:@"Focus"] != nil) {
+                        if ([attributes objectForKey:theme.NSSelectionAttributeName] != nil) {
                           NSDictionary* tagAttributes =
                               [self.attributedString attributesAtIndex:range.location
                                                         effectiveRange:nil];

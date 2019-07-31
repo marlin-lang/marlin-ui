@@ -1,5 +1,8 @@
 {
   "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
   "clang-format.style": "file",
-  "C_Cpp.formatting": "Disabled"
+  "C_Cpp.formatting": "Disabled",
+  "files.associations": {
+    "iosfwd": "cpp"
+  }
 }

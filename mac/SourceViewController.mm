@@ -14,7 +14,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.sourceTextView.sourceDelegate = self;
+  self.sourceTextView.dataSource = self;
 }
 
 - (void)setNeedsUpdate {
@@ -62,15 +62,10 @@
                                                         encoding:NSUTF8StringEncoding];
 }
 
-- (void)textView:(SourceTextView *)textView clickAtIndex:(NSUInteger)index {
+- (NSRange)textView:(SourceTextView *)textView selectRageContainsIndex:(NSUInteger)index {
   auto &doc = self.document.content;
   auto [begin, len]{doc->code_range_contains_index(index)};
-  auto *theme = [SourceTheme new];
-  [self.sourceTextView.textStorage removeAttribute:theme.NSSelectionAttributeName
-                                             range:NSMakeRange(0, doc->source_str().size())];
-  [self.sourceTextView.textStorage addAttribute:theme.NSSelectionAttributeName
-                                          value:@YES
-                                          range:NSMakeRange(begin, len)];
+  return NSMakeRange(begin, len);
 }
 
 @end

@@ -1,15 +1,15 @@
 #import <Cocoa/Cocoa.h>
 
-@protocol SourceTextViewDelegate;
+@protocol SourceTextViewDataSource;
 
 @interface SourceTextView : NSTextView
 
-@property (weak) id<SourceTextViewDelegate> sourceDelegate;
+@property (weak) id<SourceTextViewDataSource> dataSource;
 
 @end
 
-@protocol SourceTextViewDelegate
+@protocol SourceTextViewDataSource
 
-- (void)textView:(SourceTextView*)textView clickAtIndex:(NSUInteger)index;
+- (NSRange)textView:(SourceTextView*)textView selectRageContainsIndex:(NSUInteger)index;
 
 @end

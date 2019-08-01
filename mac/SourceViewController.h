@@ -3,7 +3,7 @@
 #import "Document.h"
 #import "SourceTextView.h"
 
-@interface SourceViewController : NSViewController <SourceTextViewDelegate>
+@interface SourceViewController : NSViewController <SourceTextViewDataSource>
 
 @property(nonatomic, weak) Document* document;
 
